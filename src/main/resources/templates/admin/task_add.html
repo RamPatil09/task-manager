@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
+    <style>
+        body {
+            background-image: url("../media/World Map.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: fixed;
+        }
+
+        @media (max-width: 992px) {
+            body {
+                background-image: url("../media/World Map Medium.jpg");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: fixed;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                background-image: url("../media/World Map small.jpg");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: fixed;
+            }
+
+            .background {
+                width: 80%;
+                max-width: 480px;
+                margin: auto;
+                margin-top: 3%;
+                margin-bottom: 5%;
+                color: white;
+                border: 1px solid grey;
+                background-color: rgba(128, 128, 128, 0.7);
+                border-radius: 10px;
+            }
+
+            footer {
+                display: none;
+            }
+        }
+
+        .background {
+            max-width: 480px;
+            margin: auto;
+            margin-top: 3%;
+            margin-bottom: 5%;
+            color: white;
+            border: 1px solid grey;
+            background-color: rgba(128, 128, 128, 0.7);
+            border-radius: 10px;
+        }
+
+        .panel {
+            margin-top: 15%;
+        }
+
+        .checkbox label {
+            display: flex;
+            justify-content: left;
+            margin-left: 10px;
+        }
+
+        .checkbox span {
+            display: flex;
+            justify-content: right;
+            margin-left: 10px;
+            margin-top: -25px;
+        }
+
+        .checkbox span a {
+            text-decoration: none;
+        }
+
+        .checkbox a:hover {
+            color: white;
+            font-weight: bold;
+        }
+
+        .login {
+            margin-left: auto;
+        }
+
+        .signup a {
+            text-decoration: none;
+            padding-left: 10px;
+        }
+
+        .signup a:hover {
+            color: white;
+            font-weight: bold;
+        }
+
+        footer {
+            color: white;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/index}">Logo</a>
+            <button class="navbar-toggler " type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active" aria-current="page" th:href="@{/admin/index}">Home</a>
+                </div>
+
+            </div>
+            <div class="navbar-nav ml-auto" id="navbarNavAltMarkup">
+                <a class="nav-link" th:href="@{/admin/addtask}">Add task</a>
+                <a class="nav-link" th:href="@{/task/getall}">Check all tasks</a>
+                <a class="nav-link" th:href="@{/register}">Register User</a>
+                <a class="nav-link" th:href="@{/getallcontact}">Contact list</a>
+                <a class="nav-link" th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container background">
+    <h1 style="text-align: center;">Add New Task</h1>
+    <form th:action="@{/task/save}" method="post" th:object="${taskDto}">
+        <div class="form-group mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="title" id="title" th:value="${taskDto.title}" class="form-control"
+                   placeholder="Enter Title here" autofocus>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" id="description" class="form-control" placeholder="Enter Task Description"
+                      autofocus th:text="${taskDto.description}"></textarea>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="dueDate" class="form-label">Due Date</label>
+            <input type="date" name="dueDate" id="dueDate" th:value="${taskDto.dueDate}" class="form-control"
+                   placeholder="Due Date" autofocus>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="status">Select Task Status:</label>
+            <select class="form-select" id="status" name="status" th:field="${taskDto.status}">
+                <option th:value="NotAssigned">Not Assigned</option>
+                <option th:value="NotStarted">Not Started</option>
+                <option th:value="InProgress">In Progress</option>
+                <option th:value="Completed">Completed</option>
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="priority">Select Task priority:</label>
+            <select class="form-select" id="priority" name="priority" th:field="${taskDto.priority}">
+                <option th:value="Highest">Highest</option>
+                <option th:value="High">High</option>
+                <option th:value="Medium">Medium</option>
+                <option th:value="Low">Low</option>
+                <option th:value="Lowest">Lowest</option>
+            </select>
+        </div>
+
+
+        <div class="mt-4 d-grid gap-2 mb-3">
+            <button type="submit" class="btn btn-success">Add Task</button>
+        </div>
+    </form>
+    <div class="text-center signup mb-3">
+        <span>Have an account? <a href="../auth/login.html">Login</a></span>
+    </div>
+</div>
+
+
+<footer style="bottom: 0; position: relative; width: 100vw;">
+    <div class="bg-dark text-center p-3">
+        &copy; 2023 copyright;
+    </div>
+</footer>
+
+<script>
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

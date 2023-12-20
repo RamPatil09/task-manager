@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify otp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <style>
+        body {
+            background-image: url("../media/World Map.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: fixed;
+        }
+
+        @media (max-width: 992px) {
+            body {
+                background-image: url("../media/World Map Medium.jpg");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: fixed;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                background-image: url("../media/World Map small.jpg");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: fixed;
+            }
+
+            .background {
+                width: 80%;
+                max-width: 480px;
+                margin: auto;
+                margin-top: 3%;
+                margin-bottom: 5%;
+                color: white;
+                border: 1px solid grey;
+                background-color: rgba(128, 128, 128, 0.7);
+                border-radius: 10px;
+            }
+
+            footer {
+                display: none;
+            }
+        }
+
+        .background {
+            max-width: 480px;
+            margin: auto;
+            margin-top: 3%;
+            margin-bottom: 5%;
+            color: white;
+            border: 1px solid grey;
+            background-color: rgba(128, 128, 128, 0.7);
+            border-radius: 10px;
+        }
+
+        .panel {
+            margin-top: 15%;
+        }
+
+        .checkbox label {
+            display: flex;
+            justify-content: left;
+            margin-left: 10px;
+        }
+
+        .checkbox span {
+            display: flex;
+            justify-content: right;
+            margin-left: 10px;
+            margin-top: -25px;
+        }
+
+        .checkbox span a {
+            text-decoration: none;
+        }
+
+        .checkbox a:hover {
+            color: white;
+            font-weight: bold;
+        }
+
+        .login {
+            margin-left: auto;
+        }
+
+        .signup a {
+            text-decoration: none;
+            padding-left: 10px;
+        }
+
+        .signup a:hover {
+            color: white;
+            font-weight: bold;
+        }
+
+        footer {
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" th:href="@{/index}">Logo</a>
+                <button class="navbar-toggler " type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link" th:href="@{/index}">Home</a>
+                        <a class="nav-link" href="#">About</a>
+                        <a class="nav-link" href="#">Blog</a>
+                        <a class="nav-link" href="#">Contact</a>
+                    </div>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav login">
+                        <a class="nav-link" th:href="@{/register}">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="text-center background">
+
+
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                <path
+                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+            </symbol>
+            <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+                <path
+                    d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+            </symbol>
+        </svg>
+
+        <div th:if="${session.success}" class="alert alert-success d-flex align-items-center m-4" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+                <use xlink:href="#check-circle-fill" />
+            </svg>
+            <div>
+                <span th:text="${session.success}"></span>
+            </div>
+        </div>
+
+
+
+        <div th:if="${session.error}" class="alert alert-danger d-flex align-items-center m-4" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+                <use xlink:href="#exclamation-triangle-fill" />
+            </svg>
+            <div>
+                <span th:text="${session.error}"></span>
+            </div>
+        </div>
+
+
+        <form class="form-background" th:action="@{/verify_otp}" style="max-width: 450px;margin: auto;" method="post">
+
+            <div>
+                <label for="otp" class="form-label"></label>
+                <input type="text" name="otp" id="otp" class="form-control" placeholder="Enter your OTP here" required
+                    autofocus>
+                <span id="otpError" style="color: red;"></span>
+            </div>
+
+            <div class="mt-3 d-grid gap-2 mb-3">
+                <button type="submit" class="btn btn-warning">Verify OTP</button>
+            </div>
+        </form>
+    </div>
+
+    <footer style="bottom: 0; position: absolute; width: 100vw;">
+        <div class="bg-dark text-center p-3">
+            &copy; 2023 copyright;
+        </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

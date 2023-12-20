@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
+    <style>
+		body {
+			background-image: url("../media/World Map.jpg");
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: fixed;
+		}
+
+		@media (max-width: 992px) {
+			body {
+				background-image: url("../media/World Map Medium.jpg");
+				background-repeat: no-repeat;
+				background-size: cover;
+				background-position: fixed;
+			}
+		}
+
+		@media (max-width: 768px) {
+			body {
+				background-image: url("../media/World Map small.jpg");
+				background-repeat: no-repeat;
+				background-size: cover;
+				background-position: fixed;
+			}
+
+			.background {
+				width: 80%;
+				max-width: 480px;
+				margin: auto;
+				margin-top: 3%;
+				margin-bottom: 5%;
+				color: white;
+				border: 1px solid grey;
+				background-color: rgba(128, 128, 128, 0.7);
+				border-radius: 10px;
+			}
+
+			footer {
+				display: none;
+			}
+		}
+
+		.background {
+			max-width: 80%;
+			margin: auto;
+			margin-top: 3%;
+			margin-bottom: 5%;
+			color: white;
+			border: 1px solid grey;
+			background-color: rgba(128, 128, 128, 0.7);
+			border-radius: 10px;
+		}
+
+		form{
+		    margin-top:0;
+		    margin-left:auto;
+		    max-width:450px;
+		}
+
+		.form-select {
+            max-width: 190px; /* Adjust the width as needed */
+        }
+
+		.panel {
+			margin-top: 15%;
+		}
+
+		.checkbox label {
+			display: flex;
+			justify-content: left;
+			margin-left: 10px;
+		}
+
+		.checkbox span {
+			display: flex;
+			justify-content: right;
+			margin-left: 10px;
+			margin-top: -25px;
+		}
+
+		.checkbox span a {
+			text-decoration: none;
+		}
+
+		.checkbox a:hover {
+			color: white;
+			font-weight: bold;
+		}
+
+		.login {
+			margin-left: auto;
+		}
+
+		.signup a {
+			text-decoration: none;
+			padding-left: 10px;
+		}
+
+		.signup a:hover {
+			color: white;
+			font-weight: bold;
+		}
+
+		.hero {
+			background-image: url("path/to/your-background-image.jpg");
+			background-size: cover;
+			color: #ffffff;
+			text-align: center;
+			padding: 100px 0;
+		}
+
+		.features {
+			background-color: #ffffff;
+			padding: 80px 0;
+		}
+
+		.feature-box {
+			text-align: center;
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+			margin-bottom: 30px;
+			transition: transform 0.3s ease-in-out;
+		}
+
+		.feature-box:hover {
+			transform: scale(1.05);
+		}
+
+		.cta {
+			background-color: #007bff;
+			color: #ffffff;
+			padding: 100px 0;
+		}
+
+		.cta h2 {
+			margin-bottom: 30px;
+		}
+
+		footer {
+		    background-color: #343a40;
+			padding: 10px 0;
+            color: white;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/index}">Logo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active" aria-current="page" th:href="@{/index}">Home</a>
+                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="#">Blog</a>
+                    <a class="nav-link" href="#">Contact</a>
+                </div>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav login">
+                    <a class="nav-link" th:href="@{/login}">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container background">
+
+    <form th:action="@{/savecontact}" method="post" th:object="${contactDto}">
+        <h2 class="text-center">Contact us</h2>
+        <div class="form-group mt-2">
+            <label for="firstname" class="form-label">* First name</label>
+            <input type="text" name="firstname" id="firstname" th:value="${contactDto.firstname}"
+                   th:classappend="${#fields.hasErrors('firstname')} ? 'is-invalid' : ''" class="form-control"
+                   placeholder="Enter your first name" autofocus>
+            <div th:each="e : ${#fields.errors('firstname')}" th:text="${e}" id="validationServer05Feedback"
+                 class="invalid-feedback">
+            </div>
+        </div>
+        <div class="form-group mt-3">
+            <label for="lastname" class="form-label">* Last name</label>
+            <input type="text" name="lastname" id="lastname" th:value="${contactDto.lastname}"
+                   th:classappend="${#fields.hasErrors('lastname')} ? 'is-invalid' : ''" class="form-control"
+                   placeholder="Enter your last name" autofocus>
+            <div th:each="e : ${#fields.errors('lastname')}" th:text="${e}" id="validationServer05Feedback"
+                 class="invalid-feedback">
+            </div>
+        </div>
+        <div class="form-group mt-3">
+            <label for="workemail" class="form-label">* Work Email</label>
+            <input type="email" name="workemail" id="workemail" th:value="${contactDto.workemail}"
+                   th:classappend="${#fields.hasErrors('workemail')} ? 'is-invalid' : ''" class="form-control"
+                   placeholder="Enter your Work email" autofocus>
+            <div th:each="e : ${#fields.errors('workemail')}" th:text="${e}" id="validationServer05Feedback"
+                 class="invalid-feedback">
+            </div>
+        </div>
+        <div class="form-group mt-3">
+            <label for="phonenumber" class="form-label">Contact Number</label>
+            <input type="tel" name="phonenumber" id="phonenumber" th:value="${contactDto.phonenumber}"
+                   th:classappend="${#fields.hasErrors('phonenumber')} ? 'is-invalid' : ''" class="form-control"
+                   placeholder="Enter your Contact number" autofocus>
+            <div th:each="e : ${#fields.errors('phonenumber')}" th:text="${e}" id="validationServer05Feedback"
+                 class="invalid-feedback">
+            </div>
+        </div>
+        <div class="form-group mt-3">
+            <label for="companyname" class="form-label">* Company name</label>
+            <input type="text" name="companyname" id="companyname" th:value="${contactDto.companyname}"
+                   th:classappend="${#fields.hasErrors('companyname')} ? 'is-invalid' : ''" class="form-control"
+                   placeholder="Enter your Company name" autofocus>
+            <div th:each="e : ${#fields.errors('companyname')}" th:text="${e}" id="validationServer05Feedback"
+                 class="invalid-feedback">
+            </div>
+        </div>
+        <div class="form-group mt-3">
+            <label for="companysize" class="form-label">* Company size</label>
+            <input type="number" name="companysize" id="companysize" th:value="${contactDto.companysize}"
+                   th:classappend="${#fields.hasErrors('companysize')} ? 'is-invalid' : ''" class="form-control"
+                   placeholder="Enter your Company size" autofocus>
+            <div th:each="e : ${#fields.errors('companysize')}" th:text="${e}" id="validationServer05Feedback"
+                 class="invalid-feedback">
+            </div>
+        </div>
+        <div class="form-group mt-3 row">
+            <div class="col-md-6">
+                <label class="form-label">* Role</label>
+                <select class="form-select" id="role" name="role" th:field="*{role}">
+                    <option value="">Select role</option>
+                    <option value="Business_Owner">Business Owner</option>
+                    <option value="IT">IT</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">* Job level</label>
+                <select class="form-select" id="joblevel" name="joblevel" th:field="*{joblevel}">
+                    <option value="">Select job level</option>
+                    <option value="Director">Director</option>
+                    <option value="Manager">Manager</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group mt-3">
+            <label for="discuss" class="form-label">* What else would you like to discuss?</label>
+            <textarea class="form-control" id="discuss" name="discuss" rows="3"
+                      th:value="${contactDto.discuss}"
+                      th:classappend="${#fields.hasErrors('discuss')} ? 'is-invalid' : ''"
+                      placeholder="Enter any additional comments"></textarea>
+            <div th:each="e : ${#fields.errors('discuss')}" th:text="${e}" id="validationServer05Feedback"
+                 class="invalid-feedback"></div>
+        </div>
+
+        <div class="mt-3 d-grid gap-2 mb-3">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </form>
+
+</div>
+
+
+<footer>
+    <div class="container text-center">
+        &copy; 2023 Your Task Management Company | All rights reserved
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
